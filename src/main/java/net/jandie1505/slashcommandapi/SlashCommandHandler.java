@@ -3,6 +3,7 @@ package net.jandie1505.slashcommandapi;
 import net.dv8tion.jda.api.events.GenericEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.EventListener;
+import net.jandie1505.slashcommandapi.command.SlashCommand;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;

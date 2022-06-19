@@ -1,6 +1,7 @@
-package net.jandie1505.slashcommandapi;
+package net.jandie1505.slashcommandapi.command;
 
 import net.dv8tion.jda.api.Permission;
+import net.jandie1505.slashcommandapi.interfaces.SlashCommandExecutor;
 
 import java.util.HashMap;
 import java.util.Map;

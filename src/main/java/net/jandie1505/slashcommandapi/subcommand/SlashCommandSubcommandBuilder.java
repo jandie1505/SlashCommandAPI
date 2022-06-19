@@ -1,10 +1,10 @@
-package net.jandie1505.slashcommandapi;
+package net.jandie1505.slashcommandapi.subcommand;
 
 import net.dv8tion.jda.api.Permission;
+import net.jandie1505.slashcommandapi.command.SlashCommandBuilder;
+import net.jandie1505.slashcommandapi.interfaces.SlashCommandExecutor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class SlashCommandSubcommandBuilder {
@@ -20,16 +20,6 @@ public class SlashCommandSubcommandBuilder {
 
     public SlashCommandSubcommandBuilder executes(SlashCommandExecutor executor) {
         this.executor = executor;
-    }
-
-    public SlashCommandSubcommandBuilder addPermissions(Permission... permissions) {
-        this.permissions.add(new ArrayList<>(Arrays.asList(permissions)));
-        return this;
-    }
-
-    public SlashCommandSubcommandBuilder addPermissions(List<Permission> permissions) {
-        this.permissions.add(new ArrayList<>(permissions));
-        return this;
     }
 
     public SlashCommandBuilder build() {

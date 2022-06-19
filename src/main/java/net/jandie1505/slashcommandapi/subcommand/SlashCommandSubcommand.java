@@ -1,7 +1,9 @@
-package net.jandie1505.slashcommandapi;
+package net.jandie1505.slashcommandapi.subcommand;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.jandie1505.slashcommandapi.interfaces.SlashCommandExecutor;
+import net.jandie1505.slashcommandapi.interfaces.SlashCommandPermissionRequest;
 
 import java.util.List;
 import java.util.Objects;
