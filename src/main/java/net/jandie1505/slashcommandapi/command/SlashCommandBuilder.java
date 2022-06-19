@@ -2,31 +2,54 @@ package net.jandie1505.slashcommandapi.command;
 
 import net.dv8tion.jda.api.Permission;
 import net.jandie1505.slashcommandapi.interfaces.SlashCommandExecutor;
+import net.jandie1505.slashcommandapi.interfaces.SlashCommandPermissionRequest;
+import net.jandie1505.slashcommandapi.subcommand.SlashCommandSubcommand;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SlashCommandBuilder {
 
-    private SlashCommandExecutor basicExecutor;
-    private Permission globalPermission;
-    private final Map<String, SlashCommandExecutor> subcommandExecutors;
+    private SlashCommandExecutor executor;
+    private SlashCommandExecutor noPermissionExecutor;
+    private final Map<String, SlashCommandSubcommand> subcommands;
+    private SlashCommandPermissionRequest permissionRequest;
+    private boolean requireGuild;
 
     public SlashCommandBuilder() {
-        this.basicExecutor = null;
-        this.globalPermission = null;
-        this.subcommandExecutors = new HashMap<>();
+        this.executor = null;
+        this.noPermissionExecutor = null;
+        this.subcommands = new HashMap<>();
+        this.permissionRequest = null;
+        this.requireGuild = false;
     }
 
-    public SlashCommandBuilder executesDefault(SlashCommandExecutor executor) {
-        this.basicExecutor = executor;
+    public SlashCommandBuilder executes(SlashCommandExecutor executor) {
+        this.executor = executor;
         return this;
     }
 
-    public SlashCommandBuilder withPermission(Permission permission) {
-        this.globalPermission = permission;
+    public SlashCommandBuilder executesNoPermission(SlashCommandExecutor executor) {
+        this.noPermissionExecutor = executor;
         return this;
     }
 
+    public SlashCommandBuilder withSubcommand(String command, SlashCommandSubcommand subcommand) {
+        this.subcommands.put(command, subcommand);
+        return this;
+    }
 
+    public SlashCommandBuilder withPermissionRequest(SlashCommandPermissionRequest permissionRequest) {
+        this.permissionRequest = permissionRequest;
+        return this;
+    }
+
+    public SlashCommandBuilder requireGuild(boolean requireGuild) {
+        this.requireGuild = requireGuild;
+        return this;
+    }
+
+    public SlashCommand build() {
+        return new SlashCommand(this.executor, this.noPermissionExecutor, this.subcommands, this.permissionRequest, this.requireGuild);
+    }
 }
