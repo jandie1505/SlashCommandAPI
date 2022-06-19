@@ -15,7 +15,7 @@ public class SlashCommandSubcommand {
     private final SlashCommandPermissionRequest permissionRequest;
     private final boolean requireGuild;
 
-    public SlashCommandSubcommand(SlashCommandExecutor slashCommandExecutor, SlashCommandExecutor noPermissionExecutor, SlashCommandPermissionRequest permissionRequest, boolean requireGuild, List<List<Permission>> permissions) {
+    public SlashCommandSubcommand(SlashCommandExecutor slashCommandExecutor, SlashCommandExecutor noPermissionExecutor, SlashCommandPermissionRequest permissionRequest, boolean requireGuild) {
 
         this.executor = Objects.requireNonNullElseGet(slashCommandExecutor, () -> interaction -> {});
 
