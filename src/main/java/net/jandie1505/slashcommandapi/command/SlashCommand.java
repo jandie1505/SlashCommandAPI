@@ -21,7 +21,7 @@ public class SlashCommand extends SlashCommandBase {
 
     @Override
     public void onSlashCommand(SlashCommandInteraction interaction) {
-        if(this.isRequireGuild() && interaction.getGuild() != null) {
+        if(!this.isRequireGuild() || interaction.getGuild() != null) {
 
             if(this.getPermissionRequest().hasPermission(interaction)) {
 
