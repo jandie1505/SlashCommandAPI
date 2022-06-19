@@ -18,7 +18,7 @@ public class SlashCommandHandler implements EventListener {
 
             for(String cmd : this.slashCommands.keySet()) {
                 if(cmd.equalsIgnoreCase(event.getName())) {
-                    this.slashCommands.get(cmd).onCommand(event.getInteraction());
+                    this.slashCommands.get(cmd).onSlashCommand(event.getInteraction());
                     break;
                 }
             }
