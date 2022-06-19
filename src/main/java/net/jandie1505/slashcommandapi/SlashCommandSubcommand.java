@@ -12,7 +12,6 @@ public class SlashCommandSubcommand {
     private final SlashCommandExecutor noPermissionExecutor;
     private final SlashCommandPermissionRequest permissionRequest;
     private final boolean requireGuild;
-    private List<List<Permission>> permissions;
 
     public SlashCommandSubcommand(SlashCommandExecutor slashCommandExecutor, SlashCommandExecutor noPermissionExecutor, SlashCommandPermissionRequest permissionRequest, boolean requireGuild, List<List<Permission>> permissions) {
 
