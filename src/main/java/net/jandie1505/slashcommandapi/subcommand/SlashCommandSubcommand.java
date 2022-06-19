@@ -1,13 +1,9 @@
 package net.jandie1505.slashcommandapi.subcommand;
 
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 import net.jandie1505.slashcommandapi.base.SlashCommandBase;
 import net.jandie1505.slashcommandapi.interfaces.SlashCommandExecutor;
 import net.jandie1505.slashcommandapi.interfaces.SlashCommandPermissionRequest;
-
-import java.util.List;
-import java.util.Objects;
 
 public class SlashCommandSubcommand extends SlashCommandBase {
 
@@ -17,16 +13,14 @@ public class SlashCommandSubcommand extends SlashCommandBase {
 
     @Override
     public void onSlashCommand(SlashCommandInteraction interaction) {
+        if(!this.requireGuild || interaction.getGuild() != null) {
 
-        if(this.requireGuild && interaction.getGuild() != null) {
-
-            if(this.permissionRequest.hasPermission(interaction)) {
-                this.executor.onSlashCommand(interaction);
+            if(this.getPermissionRequest().hasPermission(interaction)) {
+                this.getExecutor().onSlashCommand(interaction);
             } else {
-                this.noPermissionExecutor.onSlashCommand(interaction);
+                this.getNoPermissionExecutor().onSlashCommand(interaction);
             }
 
         }
-
     }
 }
