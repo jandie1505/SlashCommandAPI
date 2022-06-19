@@ -11,20 +11,41 @@ import java.util.Map;
 
 public class SlashCommand extends SlashCommandBase {
 
-    private final Map<String, SlashCommandSubcommand> subcommandExecutors;
+    private final Map<String, SlashCommandSubcommand> subcommands;
 
-    public SlashCommand(SlashCommandExecutor executor, SlashCommandExecutor noPermissionExecutor, Map<String, SlashCommandSubcommand> subcommandExecutors, SlashCommandPermissionRequest permissionRequest, boolean requireGuild) {
+    public SlashCommand(SlashCommandExecutor executor, SlashCommandExecutor noPermissionExecutor, Map<String, SlashCommandSubcommand> subcommands, SlashCommandPermissionRequest permissionRequest, boolean requireGuild) {
         super(executor, noPermissionExecutor, permissionRequest, requireGuild);
 
-        this.subcommandExecutors = new HashMap<>(subcommandExecutors);
+        this.subcommands = new HashMap<>(subcommands);
     }
 
     @Override
     public void onSlashCommand(SlashCommandInteraction interaction) {
+        if(this.isRequireGuild() && interaction.getGuild() != null) {
 
+            if(this.getPermissionRequest().hasPermission(interaction)) {
+
+                if(interaction.getSubcommandName() != null) {
+
+                    for(String subcommand : this.subcommands.keySet()) {
+                        if(subcommand.equalsIgnoreCase(interaction.getSubcommandName())) {
+                            this.subcommands.get(subcommand).onSlashCommand(interaction);
+                            break;
+                        }
+                    }
+
+                } else {
+                    this.getExecutor().onSlashCommand(interaction);
+                }
+
+            } else {
+                this.getNoPermissionExecutor().onSlashCommand(interaction);
+            }
+
+        }
     }
 
     public Map<String, SlashCommandSubcommand> getSubcommandExecutors() {
-        return Map.copyOf(this.subcommandExecutors);
+        return Map.copyOf(this.subcommands);
     }
 }
