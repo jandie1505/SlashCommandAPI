@@ -3,38 +3,31 @@ package net.jandie1505.slashcommandapi;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SlashCommandSubcommand {
 
-    private SlashCommandExecutor executor;
-    private SlashCommandExecutor noPermissionExecutor;
-    private SlashCommandPermissionRequest permissionRequest;
-    private boolean requireGuild;
+    private final SlashCommandExecutor executor;
+    private final SlashCommandExecutor noPermissionExecutor;
+    private final SlashCommandPermissionRequest permissionRequest;
+    private final boolean requireGuild;
     private List<List<Permission>> permissions;
 
-    public SlashCommandSubcommand(SlashCommandExecutor slashCommandExecutor, SlashCommandExecutor noPermissionExecutor, SlashCommandPermissionRequest permissionRequest, List<List<Permission>> permissions) {
-        this.executor = slashCommandExecutor;
-        this.noPermissionExecutor = noPermissionExecutor;
+    public SlashCommandSubcommand(SlashCommandExecutor slashCommandExecutor, SlashCommandExecutor noPermissionExecutor, SlashCommandPermissionRequest permissionRequest, boolean requireGuild, List<List<Permission>> permissions) {
 
-        if(permissionRequest != null) {
-            this.permissionRequest = permissionRequest;
-        } else {
-            this.permissionRequest = interaction -> false;
-        }
+        this.executor = Objects.requireNonNullElseGet(slashCommandExecutor, () -> interaction -> {});
 
-        this.permissions = new ArrayList<>();
+        this.noPermissionExecutor = Objects.requireNonNullElseGet(noPermissionExecutor, () -> interaction -> {});
 
-        for(List<Permission> permissions1 : permissions) {
-            List<Permission> permissions2 = new ArrayList<>(permissions1);
-            this.permissions.add(permissions2);
-        }
+        this.permissionRequest = Objects.requireNonNullElseGet(permissionRequest, () -> interaction -> false);
+
+        this.requireGuild = requireGuild;
     }
 
     public void onCommand(SlashCommandInteraction interaction) {
 
-        if(requireGuild && interaction.getGuild() != null) {
+        if(this.requireGuild && interaction.getGuild() != null) {
 
             if(this.permissionRequest.hasPermission(interaction)) {
                 this.executor.onSlashCommand(interaction);
