@@ -1,30 +1,30 @@
 package net.jandie1505.slashcommandapi.command;
 
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.jandie1505.slashcommandapi.base.SlashCommandBase;
 import net.jandie1505.slashcommandapi.interfaces.SlashCommandExecutor;
+import net.jandie1505.slashcommandapi.interfaces.SlashCommandPermissionRequest;
+import net.jandie1505.slashcommandapi.subcommand.SlashCommandSubcommand;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SlashCommand {
+public class SlashCommand extends SlashCommandBase {
 
-    private SlashCommandExecutor basicCommandExecutor;
-    private Map<String, SlashCommandExecutor> subcommandExecutors;
+    private final Map<String, SlashCommandSubcommand> subcommandExecutors;
 
-    public SlashCommand(SlashCommandExecutor basicCommandExecutor, Map<String, SlashCommandExecutor> subcommandExecutors) {
-        this.basicCommandExecutor = basicCommandExecutor;
+    public SlashCommand(SlashCommandExecutor executor, SlashCommandExecutor noPermissionExecutor, Map<String, SlashCommandSubcommand> subcommandExecutors, SlashCommandPermissionRequest permissionRequest, boolean requireGuild) {
+        super(executor, noPermissionExecutor, permissionRequest, requireGuild);
+
         this.subcommandExecutors = new HashMap<>(subcommandExecutors);
     }
 
-    public void onCommand(SlashCommandInteraction interaction) {
-        if(interaction.getSubcommandName() != null) {
-            for(String sc : this.subcommandExecutors.keySet()) {
-                if(sc.equalsIgnoreCase(interaction.getSubcommandName())) {
-                    subcommandExecutors.get(sc).onSlashCommand();
-                }
-            }
-        } else {
-            basicCommandExecutor.onSlashCommand();
-        }
+    @Override
+    public void onSlashCommand(SlashCommandInteraction interaction) {
+
+    }
+
+    public Map<String, SlashCommandSubcommand> getSubcommandExecutors() {
+        return Map.copyOf(this.subcommandExecutors);
     }
 }

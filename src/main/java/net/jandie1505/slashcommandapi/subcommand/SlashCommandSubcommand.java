@@ -2,31 +2,21 @@ package net.jandie1505.slashcommandapi.subcommand;
 
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.interactions.commands.SlashCommandInteraction;
+import net.jandie1505.slashcommandapi.base.SlashCommandBase;
 import net.jandie1505.slashcommandapi.interfaces.SlashCommandExecutor;
 import net.jandie1505.slashcommandapi.interfaces.SlashCommandPermissionRequest;
 
 import java.util.List;
 import java.util.Objects;
 
-public class SlashCommandSubcommand {
+public class SlashCommandSubcommand extends SlashCommandBase {
 
-    private final SlashCommandExecutor executor;
-    private final SlashCommandExecutor noPermissionExecutor;
-    private final SlashCommandPermissionRequest permissionRequest;
-    private final boolean requireGuild;
-
-    public SlashCommandSubcommand(SlashCommandExecutor slashCommandExecutor, SlashCommandExecutor noPermissionExecutor, SlashCommandPermissionRequest permissionRequest, boolean requireGuild) {
-
-        this.executor = Objects.requireNonNullElseGet(slashCommandExecutor, () -> interaction -> {});
-
-        this.noPermissionExecutor = Objects.requireNonNullElseGet(noPermissionExecutor, () -> interaction -> {});
-
-        this.permissionRequest = Objects.requireNonNullElseGet(permissionRequest, () -> interaction -> false);
-
-        this.requireGuild = requireGuild;
+    public SlashCommandSubcommand(SlashCommandExecutor executor, SlashCommandExecutor noPermissionExecutor, SlashCommandPermissionRequest permissionRequest, boolean requireGuild) {
+        super(executor, noPermissionExecutor, permissionRequest, requireGuild);
     }
 
-    public void onCommand(SlashCommandInteraction interaction) {
+    @Override
+    public void onSlashCommand(SlashCommandInteraction interaction) {
 
         if(this.requireGuild && interaction.getGuild() != null) {
 
