@@ -2,6 +2,7 @@
 
 A simple library for creating slash commands for JDA  
 ![](https://img.shields.io/badge/Java-11-blue)
+[![](https://jitpack.io/v/jandie1505/SlashCommandAPI.svg)](https://jitpack.io/#jandie1505/SlashCommandAPI)
 [![CodeFactor](https://www.codefactor.io/repository/github/jandie1505/slashcommandapi/badge)](https://www.codefactor.io/repository/github/jandie1505/slashcommandapi)
 
 ## Import
