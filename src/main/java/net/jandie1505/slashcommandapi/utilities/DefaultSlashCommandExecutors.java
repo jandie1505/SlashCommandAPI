@@ -32,4 +32,18 @@ public class DefaultSlashCommandExecutors {
                         .build()
                 ).queue();
     }
+
+    /**
+     * Returns a simple missing options embed message.
+     * You can use this for the missing options executor.
+     * @return SlashCommandExecutor
+     */
+    public static SlashCommandExecutor missingOptionsExecutor() {
+        return interaction -> interaction.reply(" ").addEmbeds(
+                new EmbedBuilder()
+                        .setDescription("Missing options")
+                        .setColor(Color.RED)
+                        .build()
+        ).queue();
+    }
 }

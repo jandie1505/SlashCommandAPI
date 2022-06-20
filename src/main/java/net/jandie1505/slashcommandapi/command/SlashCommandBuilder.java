@@ -1,6 +1,7 @@
 package net.jandie1505.slashcommandapi.command;
 
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.jandie1505.slashcommandapi.interfaces.SlashCommandExecutor;
 import net.jandie1505.slashcommandapi.interfaces.SlashCommandPermissionRequest;
 import net.jandie1505.slashcommandapi.subcommand.SlashCommandSubcommand;
@@ -12,16 +13,20 @@ public class SlashCommandBuilder {
 
     private SlashCommandExecutor executor;
     private SlashCommandExecutor noPermissionExecutor;
+    private SlashCommandExecutor missingOptionsExecutor;
     private final Map<String, SlashCommandSubcommand> subcommands;
     private SlashCommandPermissionRequest permissionRequest;
     private boolean requireGuild;
+    private final Map<String, OptionType> requiredOptions;
 
     public SlashCommandBuilder() {
         this.executor = null;
         this.noPermissionExecutor = null;
+        this.missingOptionsExecutor = null;
         this.subcommands = new HashMap<>();
         this.permissionRequest = null;
         this.requireGuild = false;
+        this.requiredOptions = new HashMap<>();
     }
 
     public SlashCommandBuilder executes(SlashCommandExecutor executor) {
@@ -31,6 +36,11 @@ public class SlashCommandBuilder {
 
     public SlashCommandBuilder executesNoPermission(SlashCommandExecutor executor) {
         this.noPermissionExecutor = executor;
+        return this;
+    }
+
+    public SlashCommandBuilder executesMissingOptions(SlashCommandExecutor executor) {
+        this.missingOptionsExecutor = executor;
         return this;
     }
 
@@ -49,7 +59,12 @@ public class SlashCommandBuilder {
         return this;
     }
 
+    public SlashCommandBuilder requireOption(String name, OptionType optionType) {
+        this.requiredOptions.put(name, optionType);
+        return this;
+    }
+
     public SlashCommand build() {
-        return new SlashCommand(this.executor, this.noPermissionExecutor, this.subcommands, this.permissionRequest, this.requireGuild);
+        return new SlashCommand(this.executor, this.noPermissionExecutor, this.missingOptionsExecutor, this.subcommands, this.permissionRequest, this.requireGuild, this.requiredOptions);
     }
 }
