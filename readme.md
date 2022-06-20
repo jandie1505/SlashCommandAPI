@@ -17,7 +17,7 @@ A simple library for creating slash commands for JDA
 <dependency>
     <groupId>com.github.jandie1505</groupId>
     <artifactId>SlashCommandAPI</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
