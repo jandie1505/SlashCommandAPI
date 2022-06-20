@@ -20,6 +20,10 @@ A simple library for creating slash commands for JDA
 </dependency>
 ```
 
+You also can import the project via Github Packages or via the JAR file.
+    
+Please note that JDA is not included and you need to import it into your project to use SlashCommandAPI.
+
 ## Example
 
 ```java
